@@ -20,17 +20,19 @@ Vagrant.configure("2") do |config|
   # config.vm.box_check_update = false
 
   #name of the server
-  config.vm.define "web" do |web|
-    web.vm.hostname = "web"
+  config.vm.define "webserver" do |webserver|
+    webserver.vm.hostname = "webserver"
 
     #port forwarding enabled
-    web.vm.network "forwarded_port", guest:80, host:8080, host_ip: "127.0.0.1"
+    webserver.vm.network "forwarded_port", guest:80, host:1234, host_ip: "127.0.0.1"
 
 
-    web.vm.network "private_network", ip: "192.168.2.11"
+    webserver.vm.network "private_network", ip: "192.168.2.11"
     
-    web.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
+    webserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
+    webserver.vm.provision :shell, path: "bootstrap.sh"
+    
   end
 
   # Create a forwarded port mapping which allows access to a specific port
