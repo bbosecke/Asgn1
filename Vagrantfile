@@ -35,6 +35,19 @@ Vagrant.configure("2") do |config|
     
   end
 
+  
+  #name of the server
+  #config.vm.define "dbserver" do |dbserver|
+  #  dbserver.vm.hostname = "dbserver"
+#
+#    dbserver.vm.network "private_network", ip: "192.168.2.12"
+#    dbserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
+
+    #set up provisioning steps through a path
+ #   dbserver.vm.provision :shell, path: "dbbootstrap.sh"
+
+ # end  
+
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
