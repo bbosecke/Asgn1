@@ -1,0 +1,23 @@
+MON 17th Aug, From Brodie
+
+Inside of the Vagrantfile there is a line that says, “webserver.vm.provision :shell, path: “bootstrap.sh”
+
+What this does is that the bootstrap.sh file will be opened and run in terminal when “vagrant up” is commanded in the directory. It essentially means every time you vagrant up, it will install everything we need to allow another developer to pick up our project from where we take it off (the aim of the assignment).
+
+So basically the .sh file will contain stuff like ‘apt-get update’ and ‘apt-get install -y apache2’ which will install apache2. And then we can make the provision (through the .sh file) create PHP or html files or whatever, so every time we go vagrant destroy, vagrant up, it is all there for us, as well as another developer on another machine. 
+
+So when we create our second vm, and our third, I guess we can have two other .sh files that work with both the vms so that when “vagrant up” is commanded, everything is ready for another developer to pick up and ‘finish’ the project.
+
+ERRORS
+- On web server, the “forwarded_port” host doesn’t allow it to be 8080, comes up with an error about the port already being used… Haven’t found a fix so just changed host to “host:1234” in the meantime
+
+- Inside of the boostrap.sh file, I have to use SUDO apt-get install … Sudo means “run as root user” overuling access privileges… I don’t think I should have to run it as sudo but again, temporary fix
+
+CURRENTLY
+- the vagrant file when you go “vagrant up”, creates a vm called “webserver” and you can “vagrant ssh webserver” to get inside of the vm. The apache2 package gets installed automatically. 
+
+NEXT STEPS
+- Finish creating the provisioning step (boostrap.sh file) so that it does everything we want it to when we run the vagrant up command
+- Create a second vm for the database. I guess David’s code is what we can base the install process off and the provisioning steps…?
+
+——END —— 
