@@ -35,6 +35,11 @@ Vagrant.configure("2") do |config|
       sudo apt-get update
       sudo apt-get install -y apache2 php libapache2-mod-php php-mysql
 
+      cp /vagrant/index.conf /etc/apache2/sites-available/
+      a2ensite index
+      a2dissite 000-default
+      service apache2 reload
+
     export MYSQL_PWD='insecure_mysqlroot_pw'
     echo "mysql-server mysql-server/root_password password $MYSQL_PWD" | debconf-set-selections 
     echo "mysql-server mysql-server/root_password_again password $MYSQL_PWD" | debconf-set-selections
@@ -44,6 +49,7 @@ Vagrant.configure("2") do |config|
     echo "GRANT ALL PRIVILEGES ON contestants.* TO 'webuser'@'%'" | mysql
 
     export MYSQL_PWD='insecure_db_pw'
+    #creates the table from setup-database.sql
     cat /vagrant/setup-database.sql | mysql -u webuser contestants
 
     service mysql restart
