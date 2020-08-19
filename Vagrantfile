@@ -31,7 +31,12 @@ Vagrant.configure("2") do |config|
     
     webserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
-    webserver.vm.provision :shell, path: "bootstrap.sh"
+    webserver.vm.provision "shell", inline: <<-SHELL
+      sudo apt-get update
+      sudo apt-get install -y apache2 php libapache2-mod-php php-mysql
+
+     echo "WELCOME TO WEBSERVER"
+    SHELL
     
   end
 
