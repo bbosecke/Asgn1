@@ -35,70 +35,23 @@ Vagrant.configure("2") do |config|
       sudo apt-get update
       sudo apt-get install -y apache2 php libapache2-mod-php php-mysql
 
+    export MYSQL_PWD='insecure_mysqlroot_pw'
+    echo "mysql-server mysql-server/root_password password $MYSQL_PWD" | debconf-set-selections 
+    echo "mysql-server mysql-server/root_password_again password $MYSQL_PWD" | debconf-set-selections
+    apt-get -y install mysql-server
+    echo "CREATE DATABASE contestants;" | mysql
+    echo "CREATE USER 'webuser'@'%' IDENTIFIED BY 'insecure_db_pw';" | mysql
+    echo "GRANT ALL PRIVILEGES ON contestants.* TO 'webuser'@'%'" | mysql
+
+    export MYSQL_PWD='insecure_db_pw'
+    cat /vagrant/setup-database.sql | mysql -u webuser contestants
+
+    service mysql restart
      echo "WELCOME TO WEBSERVER"
     SHELL
+
+    
     
   end
 
-  
-  #name of the server
-  #config.vm.define "dbserver" do |dbserver|
-  #  dbserver.vm.hostname = "dbserver"
-#
-#    dbserver.vm.network "private_network", ip: "192.168.2.12"
-#    dbserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
-
-    #set up provisioning steps through a path
- #   dbserver.vm.provision :shell, path: "dbbootstrap.sh"
-
- # end  
-
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
-  # NOTE: This will enable public access to the opened port
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
-
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine and only allow access
-  # via 127.0.0.1 to disable public access
-  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
-
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
-
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-  # config.vm.network "public_network"
-
-  # Share an additional folder to the guest VM. The first argument is
-  # the path on the host to the actual folder. The second argument is
-  # the path on the guest to mount the folder. And the optional third
-  # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
-
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
-  # config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
-  #   vb.memory = "1024"
-  # end
-  #
-  # View the documentation for the provider you are using for more
-  # information on available options.
-
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
 end
