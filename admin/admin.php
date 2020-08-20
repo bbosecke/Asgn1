@@ -5,7 +5,7 @@
 th { text-align: left; }
 
 table, th, td {
-border: 2px solid Aqua;
+border: 2px solid aqua;
 border-collapse: collapse;
 }
 
@@ -16,13 +16,10 @@ padding: 0.2em;
 </head>
 
 <body>
-<h1>Welcome to BroMo mountain</h1>
+<h1>WELCOME Admin</h1>
 
 
-
-<p>Eventually enter your myPass ID here and then show how many runs they have done</p>
-
-<form action="index.php" method="post">
+<form action="admin.php" method="post">
 <p>
 <label for="id">ID:</label>
 <input type="text" name="idNum" id="id">
@@ -34,9 +31,6 @@ padding: 0.2em;
 <input type="submit" value="Submit">
 </form>
 
-<table border="1">
-<tr><th>Name</th><th>ID</th><th>RUNS</th></tr>
-
 <?php
 
 $db_host   = '192.168.2.12';
@@ -47,13 +41,6 @@ $db_passwd = 'insecure_db_pw';
 $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
 $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
-
-$q = $pdo->query("SELECT * FROM myPass");
-
-
-while($row = $q->fetch()){
-echo "<tr><td>".$row["id"]."</td><td>".$row["name"]."</td><td>".$row["runs"]."</td></tr>\n";
-}
 
 ?>
 

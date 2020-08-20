@@ -61,9 +61,8 @@ Vagrant.configure("2") do |config|
       sudo apt-get update
       sudo apt-get install -y apache2 php libapache2-mod-php php-mysql
 
-      # *** NEED NEW INDEX.CONF FILE HERE! ***
-      cp /vagrant/index.conf /etc/apache2/sites-available/
-      a2ensite index
+      cp /vagrant/admin.conf /etc/apache2/sites-available/
+      a2ensite admin
       a2dissite 000-default
       service apache2 reload
 
