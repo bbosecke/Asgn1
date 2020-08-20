@@ -40,7 +40,21 @@ Vagrant.configure("2") do |config|
       a2dissite 000-default
       service apache2 reload
 
-    export MYSQL_PWD='insecure_mysqlroot_pw'
+   SHELL
+    
+    
+  end
+
+  config.vm.define "dbserver" do |dbserver|
+    dbserver.vm.hostname = "dbserver"
+
+    dbserver.vm.network "private_network", ip: "192.168.2.12"
+    dbserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
+
+    dbserver.vm.provision "shell", inline: <<-SHELL
+
+sudo apt-get update
+ export MYSQL_PWD='insecure_mysqlroot_pw'
     echo "mysql-server mysql-server/root_password password $MYSQL_PWD" | debconf-set-selections 
     echo "mysql-server mysql-server/root_password_again password $MYSQL_PWD" | debconf-set-selections
     apt-get -y install mysql-server
@@ -52,12 +66,13 @@ Vagrant.configure("2") do |config|
     #creates the table from setup-database.sql
     cat /vagrant/setup-database.sql | mysql -u webuser contestants
 
+# so the webserver can connect to the database server:
+sed -i'' -e '/bind-address/s/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+
     service mysql restart
      echo "WELCOME TO WEBSERVER"
     SHELL
+  end 
 
-    
-    
-  end
 
 end
