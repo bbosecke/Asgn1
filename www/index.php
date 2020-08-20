@@ -22,6 +22,18 @@ padding: 0.2em;
 
 <p>Eventually enter your myPass ID here and then show how many runs they have done</p>
 
+<form action="index.php" method="post">
+<p>
+<label for="id">ID:</label>
+<input type="text" name="idNum" id="id">
+</p>
+<p>
+<label for="name">Name:</label>
+<input type="text" name="named" id="name">
+</p>
+<input type="submit" value="Submit">
+</form>
+
 <table border="1">
 <tr><th>Name</th><th>ID</th></tr>
 
@@ -38,9 +50,42 @@ $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
 
 $q = $pdo->query("SELECT * FROM myPass");
 
+
 while($row = $q->fetch()){
 echo "<tr><td>".$row["id"]."</td><td>".$row["name"]."</td></tr>\n";
 }
+
+?>
+
+
+<?php
+$link = mysqli_connect($db_host, $db_user, $db_passwd, $db_name);
+
+// Check connection
+if($link === false){
+die("ERROR: Could not connect. " . mysqli_connect_error());
+}
+
+// Escape user inputs for security
+$idNum = mysqli_real_escape_string($link, $_REQUEST['idNum']);
+$named = mysqli_real_escape_string($link, $_REQUEST['named']);
+
+
+// Attempt insert query execution
+$sql = "INSERT INTO myPass (id,name) VALUES ('$idNum','$named')";
+if(mysqli_query($link, $sql)){
+echo "Records added successfully.";
+} else{
+echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+}
+
+
+// Close connection
+mysqli_close($link);
+
+
+
+
 
 ?>
 </table>

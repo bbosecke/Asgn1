@@ -70,7 +70,6 @@ sudo apt-get update
 sed -i'' -e '/bind-address/s/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
 
     service mysql restart
-     echo "WELCOME TO WEBSERVER"
     SHELL
   end 
 
