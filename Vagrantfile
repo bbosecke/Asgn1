@@ -46,18 +46,18 @@ Vagrant.configure("2") do |config|
   end
 
   #Admin Server
-  config.vm.define "admnserver" do |admnserver|
-    admnserver.vm.hostname = "admnserver"
+  config.vm.define "adminserver" do |adminserver|
+    adminserver.vm.hostname = "adminserver"
 
     #port forwarding enabled - using port 8081 because webserver uses 8080
-    admnserver.vm.network "forwarded_port", guest:80, host:8081, host_ip: "127.0.0.1"
+    adminserver.vm.network "forwarded_port", guest:80, host:8081, host_ip: "127.0.0.1"
 
 
-    admnserver.vm.network "private_network", ip: "192.168.2.13"
+    adminserver.vm.network "private_network", ip: "192.168.2.13"
     
-    admnserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
+    adminserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
-    admnserver.vm.provision "shell", inline: <<-SHELL
+    adminserver.vm.provision "shell", inline: <<-SHELL
       sudo apt-get update
       sudo apt-get install -y apache2 php libapache2-mod-php php-mysql
 
