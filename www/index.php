@@ -18,9 +18,9 @@ padding: 0.2em;
 <body>
 <h1>Welcome to BroMo mountain</h1>
 
+<p><a href="http://192.168.2.13/admin.php">Go to admin</a></p>
 
-
-<p>Eventually enter your myPass ID here and then show how many runs they have done</p>
+<p>To register, please enter your ID and your name and press submit</p>
 
 <form action="index.php" method="post">
 <p>
@@ -33,9 +33,6 @@ padding: 0.2em;
 </p>
 <input type="submit" value="Submit">
 </form>
-
-<table border="1">
-<tr><th>Name</th><th>ID</th><th>RUNS</th></tr>
 
 <?php
 
@@ -50,10 +47,6 @@ $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
 
 $q = $pdo->query("SELECT * FROM myPass");
 
-
-while($row = $q->fetch()){
-echo "<tr><td>".$row["id"]."</td><td>".$row["name"]."</td><td>".$row["runs"]."</td></tr>\n";
-}
 
 ?>
 
