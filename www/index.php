@@ -20,7 +20,7 @@ padding: 0.2em;
 
 <p><a href="http://192.168.2.13/admin.php">Go to admin</a></p>
 
-<p>To register, please enter your ID and your name and press submit</p>
+<p>To register, please enter your ID and your name, and if you prefer to ski or snowboard and press submit</p>
 
 <form action="index.php" method="post">
 <p>
@@ -30,6 +30,10 @@ padding: 0.2em;
 <p>
 <label for="name">Name:</label>
 <input type="text" name="named" id="name">
+</p>
+<p>
+<label for="sport">Skiing or Snowboarding:</label>
+<input type="text" name="sports" id="sport">
 </p>
 <input type="submit" value="Submit">
 </form>
@@ -62,10 +66,11 @@ die("ERROR: Could not connect. " . mysqli_connect_error());
 // Escape user inputs for security
 $idNum = mysqli_real_escape_string($link, $_REQUEST['idNum']);
 $named = mysqli_real_escape_string($link, $_REQUEST['named']);
+$sports = mysqli_real_escape_string($link, $_REQUEST['sports']);
 
 
 // Attempt insert query execution
-$sql = "INSERT INTO myPass (id,name,runs) VALUES ('$idNum','$named', '0')";
+$sql = "INSERT INTO myPass (id,name,runs,preferredSport) VALUES ('$idNum','$named', '0', '$sports')";
 if(mysqli_query($link, $sql)){
 echo "Records added successfully.";
 } else{
