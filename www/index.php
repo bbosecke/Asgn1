@@ -24,7 +24,7 @@ padding: 0.2em;
 
 <form action="index.php" method="post">
 <p>
-<label for="id">ID:</label>
+<label for="id">ID (four digits, nums and char):</label>
 <input type="text" name="idNum" id="id">
 </p>
 <p>

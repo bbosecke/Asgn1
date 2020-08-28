@@ -19,7 +19,7 @@
     <h1>Welcome, Admin</h1>
 
       <table border="1">
-  <tr><th>Name</th><th>ID</th><th>RUNS</th><th>SKIER/SNOWBOARDER</th></tr>
+  <tr><th>ID</th><th>NAME</th><th>RUNS</th><th>SKIER/SNOWBOARDER</th></tr>
 
   <?php
 
