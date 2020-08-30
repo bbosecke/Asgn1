@@ -19,7 +19,7 @@
     <h1>Welcome, Admin</h1>
 
       <table border="1">
-  <tr><th>ID</th><th>NAME</th><th>RUNS</th><th>SKIER/SNOWBOARDER</th></tr>
+  <tr><th>USERNAME</th><th>NAME</th><th>RUNS</th><th>SKIER/SNOWBOARDER</th></tr>
 
   <?php
 
@@ -36,7 +36,7 @@
 
 
   while($row = $q->fetch()){
-  echo "<tr><td>".$row["id"]."</td><td>".$row["name"]."</td><td>".$row["runs"]."</td><td>".$row["preferredSport"]."</td></tr>\n";
+  echo "<tr><td>".$row["username"]."</td><td>".$row["name"]."</td><td>".$row["runs"]."</td><td>".$row["preferredSport"]."</td></tr>\n";
   }
 
   ?>

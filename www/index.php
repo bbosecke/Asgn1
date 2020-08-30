@@ -20,12 +20,12 @@ padding: 0.2em;
 
 <p><a href="http://192.168.2.13/admin.php">Go to admin</a></p>
 
-<p>To register, please enter your ID and your name, and if you prefer to ski or snowboard and press submit</p>
+<p>To register, please enter a username and your full name, and if you prefer to ski or snowboard and press submit</p>
 
 <form action="index.php" method="post">
 <p>
-<label for="id">ID (four digits, nums and char):</label>
-<input type="text" name="idNum" id="id">
+<label for="username">Username (This is what you will use to login):</label>
+<input type="text" name="idNum" id="username">
 </p>
 <p>
 <label for="name">Name:</label>
@@ -70,7 +70,7 @@ $sports = mysqli_real_escape_string($link, $_REQUEST['sports']);
 
 
 // Attempt insert query execution
-$sql = "INSERT INTO myPass (id,name,runs,preferredSport) VALUES ('$idNum','$named', '0', '$sports')";
+$sql = "INSERT INTO myPass (username,name,runs,preferredSport) VALUES ('$idNum','$named', '0', '$sports')";
 if(mysqli_query($link, $sql)){
 echo "Records added successfully.";
 } else{
