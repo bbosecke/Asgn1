@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
   # `vagrant box outdated`. This is not recommended.
   # config.vm.box_check_update = false
 
-  #name of the server
+  #naming of the server
   config.vm.define "webserver" do |webserver|
     webserver.vm.hostname = "webserver"
 
@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
     
     webserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
-    #This executes the installations required for the 
+    #Provisionning occurs when the machine is vagrant 'upped', and the installations required will be installed during start-up
     webserver.vm.provision "shell", inline: <<-SHELL
       sudo apt-get update
       sudo apt-get install -y apache2 php libapache2-mod-php php-mysql
@@ -46,18 +46,19 @@ Vagrant.configure("2") do |config|
     
   end
 
-  #Admin Server
+  #Naming Admin Server
   config.vm.define "adminserver" do |adminserver|
     adminserver.vm.hostname = "adminserver"
 
     #port forwarding enabled - using port 8081 because webserver uses 8080
     adminserver.vm.network "forwarded_port", guest:80, host:8081, host_ip: "127.0.0.1"
 
-
+    #access the website through the internet, http://192.168.2.13/admin.php
     adminserver.vm.network "private_network", ip: "192.168.2.13"
     
     adminserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
+    #Provisionning occurs when the machine is vagrant 'upped', and the installations required will be installed during start-up
     adminserver.vm.provision "shell", inline: <<-SHELL
       sudo apt-get update
       sudo apt-get install -y apache2 php libapache2-mod-php php-mysql
@@ -72,12 +73,15 @@ Vagrant.configure("2") do |config|
     
   end
 
+  #Naming of the dbserver
   config.vm.define "dbserver" do |dbserver|
     dbserver.vm.hostname = "dbserver"
 
+    #different IP address to the webserver and adminserver
     dbserver.vm.network "private_network", ip: "192.168.2.12"
     dbserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
+    #Provisionning occurs when the machine is vagrant 'upped', and the installations required will be installed during start-up
     dbserver.vm.provision "shell", inline: <<-SHELL
 
     sudo apt-get update
